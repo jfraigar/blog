@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
+  http_basic_authenticate_with :name => "minome", :password => "misecreto"
   def index
     @posts = Post.all
 
@@ -13,10 +14,10 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @post = Post.find(params[:id])
+    @post = Post.find_by_name(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render json: @post }# show.html.erb
       format.json { render json: @post }
     end
   end
